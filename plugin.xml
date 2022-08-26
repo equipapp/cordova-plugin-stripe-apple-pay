@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-           id="cordova-plugin-stripe-apple-pay"
-      version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-stripe-apple-pay" version="1.0.0">
 
     <name>Apple Pay with Stripe</name>
     <description>Implements Apple Pay with Stripe.</description>
     <keywords>cordova,payment,apple pay,stripe</keywords>
     <repo>https://github.com/asangadev/cordova-plugin-stripe-apple-pay</repo>
 
-    <preference name="APPLE_MERCHANT_IDENTIFIER_DEBUG" />
-    <preference name="APPLE_MERCHANT_IDENTIFIER_RELEASE" />
+    <preference name="APPLE_MERCHANT_IDENTIFIER" />
 
     <platform name="ios">
 
@@ -17,23 +14,19 @@
             <clobbers target="ApplePay" />
         </js-module>
 
-        <framework src="PassKit.framework"/>
+        <framework src="PassKit.framework" />
 
-        <header-file src="src/ios/CDVApplePay.h"/>
-        <source-file src="src/ios/CDVApplePay.m"/>
+        <header-file src="src/ios/CDVApplePay.h" />
+        <source-file src="src/ios/CDVApplePay.m" />
 
         <config-file target="config.xml" parent="/*">
-	        <feature name="ApplePay">
-	            <param name="ios-package" value="CDVApplePay"/>
-	        </feature>
+            <feature name="ApplePay">
+                <param name="ios-package" value="CDVApplePay" />
+            </feature>
         </config-file>
 
-        <config-file target="*-Debug.plist" parent="AppleMerchantIdentifier">
-            <string>$APPLE_MERCHANT_IDENTIFIER_DEBUG</string>
-        </config-file>
-
-        <config-file target="*-Release.plist" parent="AppleMerchantIdentifier">
-            <string>$APPLE_MERCHANT_IDENTIFIER_RELEASE</string>
+        <config-file target="*-Info.plist" parent="AppleMerchantIdentifier">
+            <string>$APPLE_MERCHANT_IDENTIFIER</string>
         </config-file>
 
         <!-- Stripe iOS Framework -->
