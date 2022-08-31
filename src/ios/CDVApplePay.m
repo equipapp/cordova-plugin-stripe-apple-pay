@@ -27,10 +27,17 @@
 
 - (void)setKey:(CDVInvokedUrlCommand*)command
 {
-    // Stripe Publishable Key
-    NSString *stripePublishableKey = [[command.arguments objectAtIndex:0] objectForKey:@"key"];
-    NSLog(@"Stripe stripePublishableKey == %@", stripePublishableKey);
-    [[STPPaymentConfiguration sharedConfiguration] setPublishableKey:stripePublishableKey];
+    CDVPluginResult* pluginResult = nil;
+    NSString* stripePublishableKey = [command.arguments objectAtIndex:0];
+
+    if (stripePublishableKey != nil) {
+        NSLog(@"Stripe stripePublishableKey == %@", stripePublishableKey);
+        [[STPPaymentConfiguration sharedConfiguration] setPublishableKey:stripePublishableKey];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Stripe Publishable Key cannot be null"];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (NSMutableDictionary*)applyABRecordBillingAddress:(ABRecordRef)address forDictionary:(NSMutableDictionary*)response {
